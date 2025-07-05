@@ -64,7 +64,7 @@ export default function Component({ episode, summary }: SummaryModalProps) {
     <div className="max-w-6xl mx-auto p-6 space-y-6">
       {/* Header */}
       <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold bg-clip-text text-black">
+        <h1 className="text-xl md:text-3xl font-bold bg-clip-text text-black">
           Podcast summary for {episode.podcast.title_original}
         </h1>
       </div>
@@ -108,60 +108,71 @@ export default function Component({ episode, summary }: SummaryModalProps) {
         </Card>
 
         {/* Content tab Section */}
-        <div className="space-y-6">
+        <div className="space-y-4 md:space-y-6">
           <Tabs
             defaultValue="brief-summary"
             value={activeTab}
             onValueChange={(value) => setActiveTab(value as typeof activeTab)}
-            className="w-full bg-[#4B6043}"
+            className="w-full bg-[#4B6043]"
           >
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-3 h-auto p-1">
               <TabsTrigger
                 value="brief-summary"
-                className="flex items-center gap-2"
+                className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 p-2 sm:p-3 text-xs sm:text-sm"
               >
-                <FileText className="h-4 w-4" />
-                Summary (short)
+                <FileText className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline">Summary (short)</span>
+                <span className="sm:hidden">Short</span>
               </TabsTrigger>
               <TabsTrigger
                 value="longer-summary"
-                className="flex items-center gap-2"
+                className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 p-2 sm:p-3 text-xs sm:text-sm"
               >
-                <Sparkles className="h-4 w-4" />
-                Summary (long)
+                <Sparkles className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline">Summary (long)</span>
+                <span className="sm:hidden">Long</span>
               </TabsTrigger>
               <TabsTrigger
                 value="timestamp"
-                className="flex items-center gap-2"
+                className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 p-2 sm:p-3 text-xs sm:text-sm"
               >
-                <Clock className="h-5 w-5 text-orange-500" />
-                Key Moments
+                <Clock className="h-3 w-3 sm:h-4 sm:w-4 text-orange-500" />
+                <span className="hidden sm:inline">Key Moments</span>
+                <span className="sm:hidden">Moments</span>
               </TabsTrigger>
             </TabsList>
 
             <TabsContent value="brief-summary" className="mt-4">
               <Card>
-                <CardHeader className="pb-3">
+                <CardHeader className="pb-3 p-4 md:p-6">
                   <div className="flex justify-end">
                     <div className="flex items-center gap-2">
-                      <Button variant="ghost" size="sm" onClick={handleCopy}>
-                        <Copy className="h-4 w-4" />
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={handleCopy}
+                        className="h-8 w-8 sm:h-10 sm:w-auto sm:px-3"
+                      >
+                        <Copy className="h-3 w-3 sm:h-4 sm:w-4" />
+                        <span className="hidden sm:inline ml-2">Copy</span>
                       </Button>
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => handleShare(activeTab)}
+                        className="h-8 w-8 sm:h-10 sm:w-auto sm:px-3"
                       >
-                        <Share2 className="h-4 w-4" />
+                        <Share2 className="h-3 w-3 sm:h-4 sm:w-4" />
+                        <span className="hidden sm:inline ml-2">Share</span>
                       </Button>
                     </div>
                   </div>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="p-4 md:p-6 pt-0">
                   <Textarea
                     value={summary?.shortSummary}
                     readOnly
-                    className="min-h-[300px] resize-none border-0 p-0 focus-visible:ring-0"
+                    className="min-h-[250px] md:min-h-[300px] resize-none border-0 p-0 focus-visible:ring-0 text-sm md:text-base"
                   />
                 </CardContent>
               </Card>
@@ -169,25 +180,33 @@ export default function Component({ episode, summary }: SummaryModalProps) {
 
             <TabsContent value="longer-summary" className="mt-4">
               <Card>
-                <CardHeader className="pb-3">
+                <CardHeader className="pb-3 p-4 md:p-6">
                   <div className="flex justify-end">
                     <div className="flex items-center gap-2">
-                      <Button variant="ghost" size="sm" onClick={handleCopy}>
-                        <Copy className="h-4 w-4" />
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={handleCopy}
+                        className="h-8 w-8 sm:h-10 sm:w-auto sm:px-3"
+                      >
+                        <Copy className="h-3 w-3 sm:h-4 sm:w-4" />
+                        <span className="hidden sm:inline ml-2">Copy</span>
                       </Button>
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => handleShare(activeTab)}
+                        className="h-8 w-8 sm:h-10 sm:w-auto sm:px-3"
                       >
-                        <Share2 className="h-4 w-4" />
+                        <Share2 className="h-3 w-3 sm:h-4 sm:w-4" />
+                        <span className="hidden sm:inline ml-2">Share</span>
                       </Button>
                     </div>
                   </div>
                 </CardHeader>
-                <CardContent>
-                  <div className="prose prose-sm max-w-none">
-                    <p className="text-gray-700 leading-relaxed">
+                <CardContent className="p-4 md:p-6 pt-0">
+                  <div className="prose prose-sm md:prose-base max-w-none">
+                    <p className="text-gray-700 leading-relaxed text-sm md:text-base">
                       {summary?.longSummary}
                     </p>
                   </div>
@@ -197,36 +216,32 @@ export default function Component({ episode, summary }: SummaryModalProps) {
 
             <TabsContent value="timestamp" className="mt-4">
               <Card>
-                <CardHeader className="pb-3">
+                <CardHeader className="pb-3 p-4 md:p-6">
                   <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg">Key Moments</CardTitle>
+                    <CardTitle className="text-base md:text-lg">
+                      Key Moments
+                    </CardTitle>
                   </div>
                 </CardHeader>
-                <CardContent>
-                  <CardContent>
-                    <div className="space-y-3">
-                      {summary?.keyMoments?.map((item, index) => (
-                        <div
-                          key={index}
-                          // onClick={() => handleJumpToTime(item.time)}
-                          className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                <CardContent className="p-4 md:p-6 pt-0">
+                  <div className="space-y-3">
+                    {summary?.keyMoments?.map((item, index) => (
+                      <div
+                        key={index}
+                        className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 p-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                      >
+                        <Badge
+                          variant="outline"
+                          className="font-mono text-xs w-fit"
                         >
-                          <Badge
-                            variant="outline"
-                            className="font-mono text-xs"
-                          >
-                            {item.time}
-                          </Badge>
-                          <span className="text-gray-700 flex-1">
-                            {item.topic}
-                          </span>
-                          {/* <Button variant="ghost" size="sm">
-                            <Play className="h-4 w-4" />
-                          </Button> */}
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
+                          {item.time}
+                        </Badge>
+                        <span className="text-gray-700 flex-1 text-sm md:text-base">
+                          {item.topic}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
